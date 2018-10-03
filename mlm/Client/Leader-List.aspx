@@ -74,7 +74,7 @@
               </asp:TemplateField >
               <asp:TemplateField HeaderText="Status" >
                 <ItemTemplate>
-                   
+                       
                     <asp:Label ID="lblstatus" runat="server" Text='<%#Eval("status") %>' CssClass="a"></asp:Label>
                 </ItemTemplate>
                   <EditItemTemplate>
@@ -86,6 +86,7 @@
             <asp:TemplateField HeaderText="Ins">
                 <ItemTemplate>
                     <asp:Label ID="lblins" runat="server" Text=""></asp:Label>
+            
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Pre">
@@ -111,18 +112,10 @@
             </asp:Panel>
          <table style="width: 100%;">
         <tr>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-             <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-            <td>&nbsp;</td>
-             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>Total</td>
+           <td style="width:19px;padding-left: 8px;"><%=insal %></td>
             <td style="width: 19px;"><%=pres %></td>
-            <td style="    width: 121px;"><%=curnt %></td>
+            <td style="width: 121px;"><%=curnt %></td>
         </tr>
        
     </table>

@@ -291,15 +291,16 @@ public class Common
     public string GenerateInvoice()
     {
         SQLHelper objsql = new SQLHelper();
-        string max = Common.Get(objsql.GetSingleValue("select max(id) from tblMaster"));
-        if(max=="" && max==null)
+        string maxn = "";
+        maxn = Common.Get(objsql.GetSingleValue("select max(id) from tblMaster"));
+        if(maxn == "")
         {
             return "1";
            
         }
         else
         {
-            string maxpid = Common.Get(objsql.GetSingleValue("select purchaseid from tblMaster where id='"+max+"'"));
+            string maxpid = Common.Get(objsql.GetSingleValue("select purchaseid from tblMaster where id='"+maxn+"'"));
             return (Convert.ToInt32(maxpid) + Convert.ToInt32(1)).ToString();
         }
     }

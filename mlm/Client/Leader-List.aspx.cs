@@ -12,14 +12,14 @@ public partial class Client_Leader_List : System.Web.UI.Page
     DataTable dt = new DataTable();
     public static string from = "", to = "", session = "";
     public static int lastyear;
-    public int pres = 0, curnt = 0;
+    public int pres = 0, curnt = 0, insal = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
           //  string a = Session["client"].ToString();
           
-        previous();
+            previous();
             bind();
             foreach (GridViewRow gr in gvdata.Rows)
             {
@@ -38,11 +38,66 @@ public partial class Client_Leader_List : System.Web.UI.Page
     }
     protected void bind()
     {
-        dt = objsql.GetTable("select c.id,m.name,m.father,m.mobile,m.mobile2,m.address,c.status,c.memberid,m.pname,m.pfather,m.paddress,m.rel  from member_creation m , tblcallstatus c where m.id=c.memberid and c.leaderid='" + Session["id"] + "' order by m.date_entry asc");
+        DataTable dtnew = new DataTable();
+        dtnew.Columns.Add("id", typeof(string));
+        dtnew.Columns.Add("name", typeof(string));
+        dtnew.Columns.Add("father", typeof(string));
+        dtnew.Columns.Add("mobile", typeof(string));
+        dtnew.Columns.Add("mobile2", typeof(string));
+        dtnew.Columns.Add("address", typeof(string));
+        dtnew.Columns.Add("status", typeof(string));
+        dtnew.Columns.Add("memberid", typeof(string));
+        dtnew.Columns.Add("pname", typeof(string));
+        dtnew.Columns.Add("pfather", typeof(string));
+        dtnew.Columns.Add("paddress", typeof(string));
+        dtnew.Columns.Add("rel", typeof(string));
+
+        dt = objsql.GetTable("select c.id,m.name,m.father,m.mobile,m.mobile2,m.address,c.status,c.memberid,m.pname,m.pfather,m.paddress,m.rel,(select regno from tblmasterorder where regno=c.memberid) as paid,(select regno from tblMaster where regno=c.memberid) as paid2 from member_creation m , tblcallstatus c where m.id=c.memberid and c.leaderid='" + Session["id"] + "' order by m.date_entry asc");
         if (dt.Rows.Count > 0)
         {
-            gvdata.DataSource = dt;
+            foreach(DataRow dtrow in dt.Rows)
+            {
+                if(dtrow["paid"].ToString()!=null && dtrow["paid"].ToString() !="")
+                {
+
+                }
+               else if (dtrow["paid2"].ToString()!= null && dtrow["paid2"].ToString() !="")
+                {
+
+                }
+                else
+                {
+                    DataRow newrow = dtnew.NewRow();
+                    newrow["id"] = dtrow["id"].ToString();
+                    newrow["name"] = dtrow["name"].ToString();
+                    newrow["father"] = dtrow["father"].ToString();
+                    newrow["mobile"] = dtrow["mobile"].ToString();
+                    newrow["mobile2"] = dtrow["mobile2"].ToString();
+                    newrow["address"] = dtrow["address"].ToString();
+                    newrow["status"] = dtrow["status"].ToString();
+                    newrow["memberid"] = dtrow["memberid"].ToString();
+                    newrow["pname"] = dtrow["pname"].ToString();
+                    newrow["pfather"] = dtrow["pfather"].ToString();
+                    newrow["paddress"] = dtrow["paddress"].ToString();
+                    newrow["rel"] = dtrow["rel"].ToString();
+                    dtnew.Rows.Add(newrow);
+                }
+            }
+            gvdata.DataSource = dtnew;
             gvdata.DataBind();
+            foreach (GridViewRow gr in gvdata.Rows)
+            {
+                LinkButton delete = (LinkButton)gr.FindControl("lnkdelete");
+                if (Session["admin"] != null)
+                {
+                    delete.Visible = true;
+                }
+                else
+                {
+                    delete.Visible = false;
+                }
+
+            }
         }
     }
 
@@ -88,7 +143,7 @@ public partial class Client_Leader_List : System.Web.UI.Page
         {
             Panel p1 = (Panel)e.Row.FindControl("pneng");
             Panel p2 = (Panel)e.Row.FindControl("pnp");
-           
+          
             Panel pnea = (Panel)e.Row.FindControl("pnea");
             Panel pnpa = (Panel)e.Row.FindControl("pnpa");
             HiddenField mid = (HiddenField)e.Row.FindControl("mid");
@@ -119,6 +174,7 @@ public partial class Client_Leader_List : System.Web.UI.Page
             cur.Text = Common.Get(objsql.GetSingleValue("select count(*) from installment where id="+mid.Value+" and Date_entry > '" + to + "' and paid='0'"));
             curnt += Convert.ToInt32(cur.Text);
             pres += Convert.ToInt32(pre.Text);
+            insal+= Convert.ToInt32(ins.Text);
             if (Convert.ToInt32(ins.Text) >= 8)
             {
                 e.Row.BackColor = System.Drawing.Color.Yellow;

@@ -137,6 +137,17 @@
                
          </Columns>
     </asp:GridView>
+       <table style="width: 933px">
+        <tr>
+            <td>Total</td>
+             
+
+           <td style="width:19px;padding-left: 8px;"><%=insal %></td>
+            <td style="width: 19px;"><%=pres %></td>
+            <td style="width: 19px;"><%=curnt %></td>
+        </tr>
+       
+    </table>
 </asp:Panel>
  <asp:Button ID="btnPrint" runat="server" Text="Print" CssClass="btn-d" OnClientClick = "return PrintPanel();" />
         <a href="punjdown.aspx" target="_blank" class=" btn-d">Print Punjabi</a>

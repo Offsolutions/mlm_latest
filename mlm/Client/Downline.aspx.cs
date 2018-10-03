@@ -9,6 +9,7 @@ public partial class Client_Default2 : System.Web.UI.Page
     SQLHelper objsql = new SQLHelper();
     public static string from = "", to = "", session = "";
     public static int lastyear;
+    public int pres = 0, curnt = 0, insal = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -104,7 +105,9 @@ public partial class Client_Default2 : System.Web.UI.Page
             ins.Text = Common.Get(objsql.GetSingleValue("select count(*) from installment where id='" + mid.Value + "' and paid='0'"));
             pre.Text = Common.Get(objsql.GetSingleValue("select count(*) from installment where id='" + mid.Value + "' and Date_entry Between '" + from + "' And '" + to + "' and paid='0'"));
             cur.Text = Common.Get(objsql.GetSingleValue("select count(*) from installment where id=" + mid.Value + " and Date_entry > '" + to + "' and paid='0'"));
-
+            curnt += Convert.ToInt32(cur.Text);
+            pres += Convert.ToInt32(pre.Text);
+            insal += Convert.ToInt32(ins.Text);
             if (Convert.ToInt32(ins.Text) >= 8)
             {
                 string test = Common.Get(objsql.GetSingleValue("select regno from tblmaster where regno='" + mid.Value + "'"));

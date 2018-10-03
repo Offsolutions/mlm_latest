@@ -139,6 +139,7 @@ top: -61PX;
                
          </Columns>
     </asp:GridView>
+   
 </asp:Panel>
  <asp:Button ID="btnPrint" runat="server" Text="Print" CssClass="btn-d" OnClientClick = "return PrintPanel();" />
                     <a href="PunjDefault.aspx" target="_blank" class=" btn-d">Print Punjabi</a>
