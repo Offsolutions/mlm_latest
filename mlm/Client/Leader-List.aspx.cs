@@ -52,22 +52,22 @@ public partial class Client_Leader_List : System.Web.UI.Page
         dtnew.Columns.Add("paddress", typeof(string));
         dtnew.Columns.Add("rel", typeof(string));
 
-        //dt = objsql.GetTable("select c.id,m.name,m.father,m.mobile,m.mobile2,m.address,c.status,c.memberid,m.pname,m.pfather,m.paddress,m.rel,(select regno from tblmasterorder where regno=c.memberid) as paid,(select regno from tblMaster where regno=c.memberid) as paid2 from member_creation m , tblcallstatus c where m.id=c.memberid and c.leaderid='" + Session["id"] + "' order by m.date_entry asc");
-        dt = objsql.GetTable("select c.id,m.name,m.father,m.mobile,m.mobile2,m.address,c.status,c.memberid,m.pname,m.pfather,m.paddress,m.rel from member_creation m , tblcallstatus c where m.id=c.memberid and c.leaderid='" + Session["id"] + "' order by m.date_entry asc");
+        dt = objsql.GetTable("select c.id,m.name,m.father,m.mobile,m.mobile2,m.address,c.status,c.memberid,m.pname,m.pfather,m.paddress,m.rel,(select regno from tblmasterorder where regno=c.memberid) as paid,(select regno from tblMaster where regno=c.memberid) as paid2 from member_creation m , tblcallstatus c where m.id=c.memberid and c.leaderid='" + Session["id"] + "' order by m.date_entry asc");
+        //dt = objsql.GetTable("select c.id,m.name,m.father,m.mobile,m.mobile2,m.address,c.status,c.memberid,m.pname,m.pfather,m.paddress,m.rel from member_creation m , tblcallstatus c where m.id=c.memberid and c.leaderid='" + Session["id"] + "' order by m.date_entry asc");
         if (dt.Rows.Count > 0)
         {
             foreach(DataRow dtrow in dt.Rows)
             {
-               // if(dtrow["paid"].ToString()!=null && dtrow["paid"].ToString() !="")
-               // {
+                if (dtrow["paid"].ToString() != null && dtrow["paid"].ToString() != "")
+                {
 
-               // }
-               //else if (dtrow["paid2"].ToString()!= null && dtrow["paid2"].ToString() !="")
-               // {
+                }
+                else if (dtrow["paid2"].ToString() != null && dtrow["paid2"].ToString() != "")
+                {
 
-               // }
-               // else
-               // {
+                }
+                else
+                {
                     DataRow newrow = dtnew.NewRow();
                     newrow["id"] = dtrow["id"].ToString();
                     newrow["name"] = dtrow["name"].ToString();
@@ -82,7 +82,7 @@ public partial class Client_Leader_List : System.Web.UI.Page
                     newrow["paddress"] = dtrow["paddress"].ToString();
                     newrow["rel"] = dtrow["rel"].ToString();
                     dtnew.Rows.Add(newrow);
-                //}
+                }
             }
             gvdata.DataSource = dtnew;
             gvdata.DataBind();

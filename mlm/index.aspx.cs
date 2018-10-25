@@ -20,6 +20,37 @@ public partial class index : System.Web.UI.Page
                 lvslider.DataSource = dt;
                 lvslider.DataBind();
             }
+            bindachievers();
+        }
+
+    }
+
+    public void bindachievers()
+    {
+        DataTable dt = new DataTable();
+        dt = objsql.GetTable("select * from tblalbum");
+        if (dt.Rows.Count > 0)
+        {
+            lvalbum.DataSource = dt;
+            lvalbum.DataBind();
+        }
+    }
+
+    protected void btnlogin_Click(object sender, EventArgs e)
+    {
+        DataTable dt = new DataTable();
+
+        dt = objsql.GetTable("select * from member_creation where ID='" + txtuser.Text.ToUpper() + "' and pass='" + txtpass.Text.ToUpper() + "' ");
+
+        if (dt.Rows.Count > 0)
+        {
+            Response.Redirect("client");
+        }
+        else
+        {
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Invalid UserName Or Password')", true);
+
         }
     }
 }
+

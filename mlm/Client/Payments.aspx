@@ -24,7 +24,7 @@
                 <%--<form id="pnlContents" runat="server">--%>
                 <asp:Panel ID="pnlContents1" runat="server">
                     <h2 style="text-align:center">Installment Delivery Ok</h2>
-                    <asp:GridView ID="GridView1" runat="server" Width="750px" CssClass="grid" HeaderStyle-CssClass="gridhead" AutoGenerateColumns="false" OnRowCommand="Page_Load" OnRowDataBound="GridView1_RowDataBound">
+                    <asp:GridView ID="GridView1" runat="server" Width="750px" CssClass="grid" HeaderStyle-CssClass="gridhead"  AutoGenerateColumns="false" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound">
                         <Columns>
                             <asp:TemplateField HeaderText="SR">
                                 <ItemTemplate>
